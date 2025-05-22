@@ -60,7 +60,8 @@ financial_results_agent = Agent(
 def brave_search(query: str) -> str:
     """
     Use this tool to get the full content of pages found using Brave search.
-    As a query use the film name or topic.
+    Find the information about the budget and box office of a film in that content.
+    Use the film name or topic as a query.
     This function returns the entire parsed text from each search result page.
     """
     brave_url = "https://api.search.brave.com/res/v1/web/search"
@@ -108,7 +109,7 @@ def brave_search(query: str) -> str:
 @financial_results_agent.tool_plain
 def knowledge_base(query: str) -> str:
     """
-    Use this tool to get film financial data from knowledge_base.md file.
+    Use this tool to get budget and box office of a movie from knowledge_base.md file.
     Try to find film in knowledge_base.md that matches the query.
     You will need to extract budget and box office data from the knowledge base.
     """
@@ -119,8 +120,8 @@ def knowledge_base(query: str) -> str:
 @financial_results_agent.tool_plain
 def wikipedia_search(query: str) -> str:
     """
-    Use this tool to get film financial data from Wikipedia.
-    As a query use film name of the movie.
+    Use this tool to get budget and box office of a film from Wikipedia.
+    Use film name of the movie as a query.
     Look for words such as budget, box office, gross, earnings, revenue.
     If there is no movie found with that name, use brave_search tool
     """
