@@ -8,21 +8,23 @@ from pydantic_ai.tools import Tool
 import requests
 import wikipedia
 from bs4 import BeautifulSoup
-# Load environment variables from .env file
 
+# Load environment variables from .env file
 load_dotenv("../.env")
 
 # Get API key from environment variable
 os.environ["OPENAI_API_KEY"] = os.getenv("OPEN_API_KEY")
 BRAVE_API_KEY = os.getenv("BRAVE_API_KEY")
+
 # Initialize the model
 model = OpenAIModel("gpt-4o-mini")
 class BudgetBoxOffice(BaseModel):
+    title: str
     budget: int
     box_office: int
 
 # Create and run the agent
-basic_agent = Agent(
+financial_results_agent = Agent(
     model=model,
     output_type=BudgetBoxOffice,
     system_prompt=("You are an assistant that analyzes movie financial results. Your task is to extract and return the budget and box office gross for movies in integer form. Follow these steps:\n"
@@ -54,7 +56,7 @@ basic_agent = Agent(
     ),
 )
 
-@basic_agent.tool_plain
+@financial_results_agent.tool_plain
 def brave_search(query: str) -> str:
     """
     Use this tool to get the full content of pages found using Brave search.
@@ -103,7 +105,7 @@ def brave_search(query: str) -> str:
 
 
 
-@basic_agent.tool_plain
+@financial_results_agent.tool_plain
 def knowledge_base(query: str) -> str:
     """
     Use this tool to get film financial data from knowledge_base.md file.
@@ -114,7 +116,7 @@ def knowledge_base(query: str) -> str:
         return f.read()
 
 
-@basic_agent.tool_plain
+@financial_results_agent.tool_plain
 def wikipedia_search(query: str) -> str:
     """
     Use this tool to get film financial data from Wikipedia.
@@ -129,5 +131,4 @@ def wikipedia_search(query: str) -> str:
         return "No movie found with that Name"
     return content
 
-response = basic_agent.run_sync("Nosferatu 2024")
-print(response.output)
+
