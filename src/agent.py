@@ -124,7 +124,6 @@ def wikipedia_search(query: str) -> str:
     Look for words such as budget, box office, gross, earnings, revenue.
     If there is no movie found with that name, use brave_search tool
     """
-    # print(query)
     try:
         content = wikipedia.page(query).content
     except:
