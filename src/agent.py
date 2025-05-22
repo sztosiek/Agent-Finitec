@@ -10,7 +10,7 @@ import wikipedia
 from bs4 import BeautifulSoup
 
 # Load environment variables from .env file
-load_dotenv("../.env")
+load_dotenv()
 
 # Get API key from environment variable
 os.environ["OPENAI_API_KEY"] = os.getenv("OPEN_API_KEY")
