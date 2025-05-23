@@ -70,7 +70,6 @@ def brave_search(query: str) -> str:
         "X-Subscription-Token": BRAVE_API_KEY
     }
     params = {"q": query, "count": 5}
-    print(query)
     try:
         response = requests.get(brave_url, headers=headers, params=params)
         response.raise_for_status()
